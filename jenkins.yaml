@@ -1,0 +1,38 @@
+jenkins:
+  systemMessage: "AutomatingGuy demo: configured automatically with JCasC plugin\n\n"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  maven:
+    installations:
+    - name: "Maven 3"
+      properties:
+      - installSource:
+          installers:
+            - maven:
+                id: "3.5.4"
+jobs:
+  - script: >
+      pipelineJob('pipeline') {
+          definition {
+              cpsScm {
+                  scriptPath 'Jenkinsfile'
+                  scm {
+                    git {
+                        remote { url 'https://github.com/mkrzyzanowski/blog-001.git' }
+                        branch '*/docker-for-mac'
+                        extensions {}
+                    }
+                  }
+              }
+          }
+      }
+# plugins:
+#   required:
+#     blueocean: latest
+#     workflow-aggregator: latest
+#     pipeline-maven: latest
+#     configuration-as-code-support: latest
+#     job-dsl: latest

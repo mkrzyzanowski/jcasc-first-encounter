@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  jenkins:
+    build:
+      context: ./jenkins
+    ports:
+      - 8080:8080
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ./jenkins.yaml:/var/jenkins_home/jenkins.yaml
+  zalenium:
+    image: dosel/zalenium:latest
+    ports:
+      - 4444:4444
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: start
+volumes:
+  jenkins_home:
